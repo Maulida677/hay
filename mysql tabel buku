@@ -1,0 +1,82 @@
+mysql -u maulida -p
+Enter password:
+ERROR 2002 (HY000): Can't connect to local server through socket '/data/data/com.termux/files/usr/var/run/mysqld.sock' (111)
+~ $ mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 3
+Server version: 10.11.4-MariaDB MariaDB Server
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| maulida            |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+6 rows in set (0.015 sec)
+
+MariaDB [(none)]> use maulida
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [maulida]> show tables;
++-------------------+
+| Tables_in_maulida |
++-------------------+
+| data_buku         |
+| distributor       |
+| pelanggan         |
+| pembelian         |
++-------------------+
+4 rows in set (0.044 sec)
+
+MariaDB [maulida]> create table penjualan(
+    -> id_order int,                                                                        id_barang int,
+    ->     harga int,
+    ->     jumlah int,
+    ->      PRIMARY KEY (id_order)
+    ->      );
+Query OK, 0 rows affected (0.117 sec)
+
+MariaDB [maulida]> insert into penjualan(id_order,id_barang,harg    -> h) values
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [maulida]> insert into penjualan(id_order,id_barang,harga,jumlah) values
+    -> (6017,15056,170000,3),
+    -> (6018,15058,32000,1);
+Query OK, 2 rows affected (0.092 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [maulida]> select * From penjualan;
++----------+-----------+--------+--------+
+| id_order | id_barang | harga  | jumlah |
++----------+-----------+--------+--------+
+|     6017 |     15056 | 170000 |      3 |
+|     6018 |     15058 |  32000 |      1 |
++----------+-----------+--------+--------+
+2 rows in set (0.006 sec)
+
+MariaDB [maulida]> update penjualan set id_barang = '1703' whereid_order = 6017;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'whereid_order = 6017' at line 1
+MariaDB [maulida]> update penjualan set id_barang = '1703' where id_order = '6017';
+Query OK, 1 row affected (0.094 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [maulida]> select * From penjualan;
++----------+-----------+--------+--------+
+| id_order | id_barang | harga  | jumlah |
++----------+-----------+--------+--------+
+|     6017 |      1703 | 170000 |      3 |
+|     6018 |     15058 |  32000 |      1 |
++----------+-----------+--------+--------+
+2 rows in set (0.005 sec)
